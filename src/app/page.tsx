@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeToggle } from '@/components/color-mode-toggle';
 import { SiRocket } from 'react-icons/si';
+import Link from 'next/link';
 
 export default async function Page() {
   return (
@@ -28,9 +29,11 @@ export default async function Page() {
         </Heading>
       </VStack>
       <Box marginTop="1rem">
-        <Button>
-          <SiRocket /> Explore!
-        </Button>
+        <Link href="/planets">
+          <Button>
+            <SiRocket /> Explore!
+          </Button>
+        </Link>
       </Box>
       <Box pos="absolute" top="4" right="4">
         <ClientOnly fallback={<Skeleton w="10" h="10" rounded="md" />}>

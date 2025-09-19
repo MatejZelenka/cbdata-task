@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useState } from 'react';
 import { Action, InitialState, Planet, PlanetsContextType } from '@/types';
 import { fetchPlanetsUtil } from '@/utils/fetch';
 
@@ -9,6 +9,7 @@ const initialState: InitialState = {
 };
 
 const planetsReducer = (state: InitialState, action: Action): InitialState => {
+  console.log('Action:', action);
   switch (action.type) {
     case 'FETCH_START':
       return { ...state, isLoading: true, error: null };
@@ -63,4 +64,12 @@ export const PlanetContextProvider = ({
       {children}
     </PlanetsContext.Provider>
   );
+};
+
+export const usePlanets = () => {
+  const context = useContext(PlanetsContext);
+  if (context === undefined) {
+    throw new Error('usePlanets must be used within a PlanetsProvider');
+  }
+  return context;
 };
