@@ -5,27 +5,21 @@ import { usePlanets } from '@/context/context';
 import { useEffect } from 'react';
 
 export default function PlanetsPage() {
-  const { planets, fetchPlanets } = usePlanets();
-
-  const test = fetch('https://swapi.info/api/planets')
-    .then((res) => res.json())
-    .then((json) => console.log(json))
-    .catch((error) => console.error(error));
+  const { planets, isLoading, error, fetchPlanets } = usePlanets();
 
   useEffect(() => {
-    console.log('useEffect triggered');
-    fetchPlanets();
+    if (planets.length === 0 && !isLoading && !error) {
+      fetchPlanets();
+    }
   }, [fetchPlanets]);
 
-  console.log(test);
+  if (isLoading) {
+    return <Box>Loading</Box>;
+  }
 
-  // if (isLoading) {
-  //   return <Box>Loading</Box>;
-  // }
-  //
-  // if (error) {
-  //   return <Box>Error</Box>;
-  // }
+  if (error) {
+    return <Box>Error</Box>;
+  }
 
-  return planets.length >= 1 ? <Box>Planets</Box> : <Box>No planets</Box>;
+  return planets?.length >= 1 ? <Box>Planets</Box> : <Box>No planets</Box>;
 }

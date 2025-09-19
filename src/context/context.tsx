@@ -1,5 +1,13 @@
-import { createContext, useContext, useReducer, useState } from 'react';
-import { Action, InitialState, Planet, PlanetsContextType } from '@/types';
+'use client';
+
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useMemo,
+  useCallback,
+} from 'react';
+import { Action, InitialState, PlanetsContextType } from '@/types';
 import { fetchPlanetsUtil } from '@/utils/fetch';
 
 const initialState: InitialState = {
@@ -36,14 +44,14 @@ export const PlanetContextProvider = ({
 }) => {
   const [state, dispatch] = useReducer(planetsReducer, initialState);
 
-  const fetchPlanets = async () => {
+  const fetchPlanets = useCallback(async () => {
+    dispatch({ type: 'FETCH_START' });
     try {
-      const response = await fetchPlanetsUtil();
-
+      const planets = await fetchPlanetsUtil();
       dispatch({
         type: 'FETCH_SUCCESS',
         payload: {
-          planets: response?.results,
+          planets,
         },
       });
     } catch (err) {
@@ -52,12 +60,12 @@ export const PlanetContextProvider = ({
         payload: err instanceof Error ? err.message : 'Unknown error occurred',
       });
     }
-  };
+  }, []);
 
-  const contextValue: PlanetsContextType = {
-    ...state,
-    fetchPlanets,
-  };
+  const contextValue: PlanetsContextType = useMemo(
+    () => ({ ...state, fetchPlanets }),
+    [state, fetchPlanets]
+  );
 
   return (
     <PlanetsContext.Provider value={contextValue}>

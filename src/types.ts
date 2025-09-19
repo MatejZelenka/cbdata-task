@@ -42,10 +42,8 @@ export type Action =
       payload: number;
     };
 
-export type PlanetsResponse = {
-  results: Planet[];
-};
+export type PlanetsResponse = Planet[];
 
 export type PlanetsContextType = {
-  fetchPlanets: (page?: number) => Promise<void>;
+  fetchPlanets: () => Promise<void>;
 } & InitialState;
