@@ -7,10 +7,10 @@ runs:
       with:
         node-version: 22
 
-    - script: |
+    - name: pnpm install
+      run: |
         corepack enable
         pnpm install
-      displayName: pnpm install
 
     - name: Format code 💅
       shell: bash
