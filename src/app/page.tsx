@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  ClientOnly,
-  Heading,
-  Skeleton,
-  VStack,
-  Flex,
-} from '@chakra-ui/react';
-import { ColorModeToggle } from '@/components/color-mode-toggle';
+import { Box, Button, Heading, VStack, Flex } from '@chakra-ui/react';
 import { SiRocket } from 'react-icons/si';
 import Link from 'next/link';
 
@@ -23,22 +14,24 @@ export default async function Page() {
       fontSize="xl"
     >
       <VStack gap="4">
-        <Heading size="4xl">Star Wars Planets</Heading>
-        <Heading size="2xl" letterSpacing="tight">
+        <Heading color="yellow.500" size="4xl">
+          Star Wars Planets
+        </Heading>
+        <Heading color="yellow.500" size="2xl" letterSpacing="tight">
           Explore planets in Star Wars Universe
         </Heading>
       </VStack>
       <Box marginTop="1rem">
         <Link href="/planets">
-          <Button>
+          <Button
+            borderColor="yellow.500"
+            variant="outline"
+            color="yellow.500"
+            _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
+          >
             <SiRocket /> Explore!
           </Button>
         </Link>
-      </Box>
-      <Box pos="absolute" top="4" right="4">
-        <ClientOnly fallback={<Skeleton w="10" h="10" rounded="md" />}>
-          <ColorModeToggle />
-        </ClientOnly>
       </Box>
     </Flex>
   );

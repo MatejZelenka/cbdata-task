@@ -3,6 +3,7 @@
 import {
   Box,
   Button,
+  ClientOnly,
   Container,
   Flex,
   Grid,
@@ -14,6 +15,8 @@ import { usePlanets } from '@/context/context';
 import { useEffect } from 'react';
 import { FiDatabase, FiRefreshCw } from 'react-icons/fi';
 import PlanetCard from '@/components/planet-card';
+import LoadingSpinner from '@/components/loading-spinner';
+import { ErrorMessage } from '@/components/error-message';
 
 export default function PlanetsPage() {
   const {
@@ -22,6 +25,11 @@ export default function PlanetsPage() {
     error,
     fetchPlanets,
     totalCount,
+    currentPage,
+    hasPrevious,
+    hasNext,
+    nextPage,
+    previousPage,
     refreshPlanets,
   } = usePlanets();
 
@@ -30,14 +38,7 @@ export default function PlanetsPage() {
       fetchPlanets();
     }
   }, [error, fetchPlanets, isLoading, planets.length]);
-
-  if (isLoading) {
-    return <Box>Loading</Box>;
-  }
-
-  if (error) {
-    return <Box>Error</Box>;
-  }
+  const TOTAL_PAGES = Math.ceil(totalCount / 20);
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function PlanetsPage() {
               <Button
                 borderColor="yellow.500"
                 loading={isLoading}
-                disabled={isLoading}
+                disabled={isLoading || !refreshPlanets}
                 variant="outline"
                 color="yellow.500"
                 _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
@@ -75,36 +76,78 @@ export default function PlanetsPage() {
           </Grid>
         </Container>
       </Box>
-      <Container maxWidth="6xl" backgroundColor="black" paddingY={4}>
-        <Flex justifyContent="center" mb={4}>
-          <Text
-            paddingX={6}
-            paddingY={3}
-            textTransform="uppercase"
-            color="yellow.400"
-            fontSize="sm"
-            borderRadius="lg"
-            border="1px solid"
-            borderColor="yellow.700"
-            backgroundColor="orange.700/15"
-          >
-            Database status: {planets.length} of {totalCount} records loaded
-          </Text>
-        </Flex>
-        <Grid
-          templateColumns={{
-            base: 'repeat(1, 1fr)',
-            md: 'repeat(2, 1fr)',
-            lg: 'repeat(3, 1fr)',
-          }}
-          gap={6}
-        >
-          {planets.map((planet, key) => (
-            <GridItem key={key}>
-              <PlanetCard {...planet} />
-            </GridItem>
-          ))}
-        </Grid>
+      <Container as="main" maxWidth="6xl" paddingY={4} minHeight="100vh">
+        {error && planets.length === 0 && !isLoading ? (
+          <ErrorMessage message={error} onRetry={fetchPlanets} />
+        ) : isLoading && planets.length === 0 ? (
+          <LoadingSpinner />
+        ) : (
+          <ClientOnly fallback={<LoadingSpinner />}>
+            <Flex justifyContent="center" mb={4}>
+              <Flex
+                paddingX={6}
+                paddingY={3}
+                gap={4}
+                textTransform="uppercase"
+                color="yellow.400"
+                fontSize="sm"
+                borderRadius="lg"
+                border="1px solid"
+                borderColor="yellow.700"
+                backgroundColor="orange.700/15"
+              >
+                <Text>
+                  Database status: {planets.length} of {totalCount} records
+                  loaded
+                </Text>
+                <Text>
+                  Sector {currentPage} of {TOTAL_PAGES}
+                </Text>
+              </Flex>
+            </Flex>
+
+            <Grid
+              templateColumns={{
+                base: 'repeat(1, 1fr)',
+                md: 'repeat(2, 1fr)',
+              }}
+              gap={6}
+            >
+              {planets.map((planet, key) => (
+                <GridItem key={key}>
+                  <PlanetCard {...planet} />
+                </GridItem>
+              ))}
+            </Grid>
+            <Flex justifyContent="center" alignItems="center" gap={4} my={8}>
+              <Button
+                borderColor="yellow.500"
+                loading={isLoading}
+                disabled={isLoading || !hasPrevious}
+                variant="outline"
+                color="yellow.500"
+                _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
+                onClick={previousPage}
+              >
+                Previous sector
+              </Button>
+              <Text color="yellow.500">
+                Sector {currentPage} of {TOTAL_PAGES}
+              </Text>
+              <Button
+                borderColor="yellow.500"
+                loading={isLoading}
+                disabled={isLoading || !hasNext}
+                variant="outline"
+                color="yellow.500"
+                _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
+                onClick={nextPage}
+              >
+                Next sector
+              </Button>
+            </Flex>
+          </ClientOnly>
+        )}
       </Container>
     </>
   );
