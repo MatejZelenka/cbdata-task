@@ -4,9 +4,8 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
   },
-  // turbopack: {
-  //   root: './pnpm-lock.yaml',
-  // },
+  output: 'export',
+  reactStrictMode: true,
 };
 
 export default nextConfig;
