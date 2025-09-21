@@ -1,6 +1,6 @@
 name: setup-node
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Node.js ⚙️
       uses: actions/setup-node@v4
