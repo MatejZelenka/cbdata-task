@@ -8,6 +8,7 @@ runs:
         node-version: 22
 
     - name: pnpm install
+      shell: bash
       run: |
         corepack enable
         pnpm install
