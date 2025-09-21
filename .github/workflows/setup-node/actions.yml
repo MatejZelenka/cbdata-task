@@ -1,0 +1,21 @@
+name: setup-node
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js ⚙️
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - script: |
+        corepack enable
+        pnpm install
+      displayName: pnpm install
+
+    - name: Format code 💅
+      shell: bash
+      run: pnpm format:check
+
+    - name: Lint code 🧹
+      shell: bash
+      run: pnpm lint

@@ -9,7 +9,9 @@
     "lint": "eslint",
     "lint:fix": "next lint --fix",
     "format": "prettier . --write",
-    "precommit": "pnpm format && pnpm build"
+    "format:check": "prettier . --check",
+    "precommit": "pnpm format && pnpm build",
+    "export": "next export"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.27.0",
