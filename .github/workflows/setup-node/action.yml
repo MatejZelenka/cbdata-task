@@ -7,14 +7,6 @@ runs:
       with:
         node-version: 22
 
-    - name: Format code 💅
-      shell: bash
-      run: pnpm format:check
-
-    - name: Lint code 🧹
-      shell: bash
-      run: pnpm lint
-
     - name: Cache dependencies ⚡
       id: cache_dependencies
       uses: actions/cache@v3
@@ -28,3 +20,11 @@ runs:
       run: |
         corepack enable
         pnpm install --frozen-lockfile
+
+    - name: Format code 💅
+      shell: bash
+      run: pnpm format:check
+
+    - name: Lint code 🧹
+      shell: bash
+      run: pnpm lint
