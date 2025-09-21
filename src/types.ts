@@ -2,17 +2,21 @@ export type InitialState = {
   isLoading: boolean;
   planets: Planet[];
   error: string | null;
+  currentPage: number;
+  totalCount: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
 };
 
 export type Planet = {
   name: string;
-  rotationPeriod: number;
-  orbitalPeriod: number;
+  rotation_period: number;
+  orbital_period: number;
   diameter: number;
   climate: string;
   gravity: string;
   terrain: string;
-  surfaceWater: number;
+  surface_water: number;
   population: number;
   residents: string[];
   films: string[];
@@ -23,6 +27,10 @@ export type Planet = {
 
 type PayloadSuccess = {
   planets: Planet[];
+  totalCount: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+  currentPage: number;
 };
 
 export type Action =
@@ -46,4 +54,7 @@ export type PlanetsResponse = Planet[];
 
 export type PlanetsContextType = {
   fetchPlanets: () => Promise<void>;
+  refreshPlanets: () => Promise<void>;
+  previousPage: () => Promise<void>;
+  nextPage: () => Promise<void>;
 } & InitialState;

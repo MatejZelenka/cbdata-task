@@ -13,8 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html className={inter.className} suppressHydrationWarning>
-      <head />
-      <body>
+      <head title="Star Wars Planets" />
+      <body style={{ backgroundColor: 'black' }}>
         <Provider>{children}</Provider>
       </body>
     </html>
