@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Star Wars Planets Explorer
 
-## Getting Started
+Explore a comprehensive list of planets from the Star Wars universe with this web application. The project fetches and displays data from the Star Wars API (SWAPI), providing details like population, diameter, and surface water for each planet.
 
-First, run the development server:
+---
+
+## 🚀 Getting Started
+
+To get a copy of this project up and running on your local machine, follow these steps.
+
+### Prerequisites
+
+This project uses **pnpm** as its package manager. **Corepack** is used to manage the Node.js package manager versions.
+
+### Installation
+
+1.  **Enable Corepack**: This command ensures you're using the correct pnpm version.
+
+    ```bash
+    corepack enable
+    ```
+
+2.  **Install Dependencies**: Navigate to the project directory and install the required packages.
+
+    ```bash
+    pnpm install
+    ```
+
+### Running the Development Server
+
+Start the application in development mode:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be accessible at: [http://localhost:3000](https://www.google.com/search?q=http://localhost.com:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Built With
 
-## Learn More
+- **Chakra UI** - A simple, modular, and accessible component library for React.
+- **PNPM** - A fast, disk space-efficient package manager.
+- **ESLint & Prettier** - Tools for maintaining consistent code style and quality.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Live Demo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+You can view a live version of the project here:
 
-## Deploy on Vercel
+[https://matejzelenka.github.io/cbdata-task/](https://matejzelenka.github.io/cbdata-task/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Enjoy your journey through the galaxy\!

@@ -21,7 +21,6 @@ const initialState: InitialState = {
 };
 
 const planetsReducer = (state: InitialState, action: Action): InitialState => {
-  console.log('Action:', action);
   switch (action.type) {
     case 'FETCH_START':
       return { ...state, isLoading: true, error: null };
@@ -85,8 +84,8 @@ export const PlanetContextProvider = ({
   }, []);
 
   const refreshPlanets = useCallback(async () => {
-    await fetchPlanets(state.currentPage);
-  }, [fetchPlanets, state.currentPage]);
+    await fetchPlanets(1);
+  }, [fetchPlanets]);
 
   const nextPage = useCallback(async () => {
     if (state.hasNext) {

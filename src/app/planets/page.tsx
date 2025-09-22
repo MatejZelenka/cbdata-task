@@ -16,9 +16,9 @@ import { useEffect } from 'react';
 import { FiDatabase, FiRefreshCw } from 'react-icons/fi';
 import PlanetCard from '@/components/planet-card';
 import LoadingSpinner from '@/components/loading-spinner';
-import { ErrorMessage } from '@/components/error-message';
+import ErrorMessage from '@/components/error-message';
 
-export default function PlanetsPage() {
+const PlanetsPage = () => {
   const {
     planets,
     isLoading,
@@ -33,6 +33,10 @@ export default function PlanetsPage() {
     refreshPlanets,
   } = usePlanets();
 
+  const scrollToTop = () => {
+    window.scrollTo({ behavior: 'smooth', top: 0, left: 0 });
+  };
+
   useEffect(() => {
     if (planets.length === 0 && !isLoading && !error) {
       fetchPlanets();
@@ -45,16 +49,16 @@ export default function PlanetsPage() {
       <Box as="header" borderBottom="1px solid" borderBottomColor="yellow.500">
         <Container maxWidth="6xl">
           <Grid
-            templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' }}
+            templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
             gap={6}
             color="yellow.500"
             padding={4}
             alignItems="center"
           >
             <GridItem colSpan={2}>
-              <Flex alignItems="center" gap={2}>
+              <Flex alignItems="center" gap={2} flexWrap="nowrap">
                 <FiDatabase size={36} />
-                <Heading size={{ base: '2xl', md: '3xl', lg: '5xl' }}>
+                <Heading size={{ base: '2xl', md: '3xl', lg: '4xl' }}>
                   PLANETARY DATABASE
                 </Heading>
               </Flex>
@@ -78,7 +82,11 @@ export default function PlanetsPage() {
       </Box>
       <Container as="main" maxWidth="6xl" paddingY={4} minHeight="100vh">
         {error && planets.length === 0 && !isLoading ? (
-          <ErrorMessage message={error} onRetry={fetchPlanets} />
+          <ErrorMessage
+            message={error}
+            onRetry={fetchPlanets}
+            isLoading={isLoading}
+          />
         ) : isLoading && planets.length === 0 ? (
           <LoadingSpinner />
         ) : (
@@ -95,6 +103,7 @@ export default function PlanetsPage() {
                 border="1px solid"
                 borderColor="yellow.700"
                 backgroundColor="orange.700/15"
+                flexWrap="wrap"
               >
                 <Text>
                   Database status: {planets.length} of {totalCount} records
@@ -105,11 +114,11 @@ export default function PlanetsPage() {
                 </Text>
               </Flex>
             </Flex>
-
             <Grid
               templateColumns={{
                 base: 'repeat(1, 1fr)',
-                md: 'repeat(2, 1fr)',
+                md: 'repeat(1, 1fr)',
+                lg: 'repeat(2, 1fr)',
               }}
               gap={6}
             >
@@ -119,7 +128,13 @@ export default function PlanetsPage() {
                 </GridItem>
               ))}
             </Grid>
-            <Flex justifyContent="center" alignItems="center" gap={4} my={8}>
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              gap={4}
+              my={8}
+              flexDirection={{ base: 'column', md: 'row' }}
+            >
               <Button
                 borderColor="yellow.500"
                 loading={isLoading}
@@ -127,7 +142,10 @@ export default function PlanetsPage() {
                 variant="outline"
                 color="yellow.500"
                 _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
-                onClick={previousPage}
+                onClick={async () => {
+                  await previousPage();
+                  scrollToTop();
+                }}
               >
                 Previous sector
               </Button>
@@ -141,7 +159,10 @@ export default function PlanetsPage() {
                 variant="outline"
                 color="yellow.500"
                 _hover={{ backgroundColor: 'yellow.500', color: 'black' }}
-                onClick={nextPage}
+                onClick={async () => {
+                  await nextPage();
+                  scrollToTop();
+                }}
               >
                 Next sector
               </Button>
@@ -151,4 +172,6 @@ export default function PlanetsPage() {
       </Container>
     </>
   );
-}
+};
+
+export default PlanetsPage;
