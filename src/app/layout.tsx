@@ -13,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html className={orbitron.className} suppressHydrationWarning>
-      <head title="Star Wars Planets" />
+      <head>
+        <title>Star Wars Planets Directory</title>
+      </head>
       <body style={{ backgroundColor: 'black' }}>
         <Provider>{children}</Provider>
       </body>
