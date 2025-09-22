@@ -19,7 +19,7 @@ runs:
       if: steps.cache_dependencies.outputs.cache-hit != 'true'
       run: |
         corepack enable
-        pnpm install --frozen-lockfile
+        pnpm install
 
     - name: Format code 💅
       shell: bash
